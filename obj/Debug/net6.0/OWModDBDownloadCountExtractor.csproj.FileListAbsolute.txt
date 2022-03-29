@@ -1,0 +1,17 @@
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\bin\Debug\net6.0\OWModDBDownloadCountExtractor.exe
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\bin\Debug\net6.0\OWModDBDownloadCountExtractor.deps.json
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\bin\Debug\net6.0\OWModDBDownloadCountExtractor.runtimeconfig.json
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\bin\Debug\net6.0\OWModDBDownloadCountExtractor.dll
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\bin\Debug\net6.0\ref\OWModDBDownloadCountExtractor.dll
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\bin\Debug\net6.0\OWModDBDownloadCountExtractor.pdb
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\OWModDBDownloadCountExtractor.csproj.AssemblyReference.cache
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\OWModDBDownloadCountExtractor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\OWModDBDownloadCountExtractor.AssemblyInfoInputs.cache
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\OWModDBDownloadCountExtractor.AssemblyInfo.cs
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\OWModDBDownloadCountExtractor.csproj.CoreCompileInputs.cache
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\OWModDBDownloadCountExtractor.dll
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\ref\OWModDBDownloadCountExtractor.dll
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\OWModDBDownloadCountExtractor.pdb
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\OWModDBDownloadCountExtractor.genruntimeconfig.cache
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Henry\source\repos\OWModDBDownloadCountExtractor\OWModDBDownloadCountExtractor\obj\Debug\net6.0\OWModDBDownloadCountExtractor.csproj.CopyComplete
