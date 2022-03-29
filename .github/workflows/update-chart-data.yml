@@ -30,6 +30,10 @@ jobs:
           git log -p > ../log.txt
           cd ..
         
+      - name: Log txt result
+        id: log-txt
+        run: echo "::set-output name=mods::$(< ./log.txt sed ':a;N;$!ba;s/\n/ /g')"
+        
       - name: Convert log.txt to json
         run: |
           ./download-extractor/bin/Debug/net6.0/OWModDBDownloadCountExtractor.exe log.txt
