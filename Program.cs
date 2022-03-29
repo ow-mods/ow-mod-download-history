@@ -27,7 +27,11 @@ class Core
 			{
 				if (update.Repo == mod)
 				{
-					countUpdates.Add(new DownloadCountUpdate() { DownloadCount = update.DownloadCount, UnixTimestamp = ((DateTimeOffset)update.Time).ToUnixTimeSeconds()});
+					countUpdates.Add(new DownloadCountUpdate()
+					{
+						DownloadCount = update.DownloadCount,
+						UnixTimestamp = ((DateTimeOffset)update.Time).ToUnixTimeSeconds()
+					});
 				}
 			}
 
@@ -36,6 +40,7 @@ class Core
 				Repo = mod,
 				Updates = countUpdates.ToArray()
 			};
+
 			entries.Add(entry);
 		}
 
@@ -46,8 +51,8 @@ class Core
 
 	public static int GetNthIndex(string s, char t, int n)
 	{
-		int count = 0;
-		for (int i = 0; i < s.Length; i++)
+		var count = 0;
+		for (var i = 0; i < s.Length; i++)
 		{
 			if (s[i] == t)
 			{
@@ -58,6 +63,7 @@ class Core
 				}
 			}
 		}
+
 		return -1;
 	}
 }
