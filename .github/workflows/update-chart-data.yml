@@ -19,7 +19,7 @@ jobs:
       - name: Checkout mod database
         uses: actions/checkout@v3
         with:
-          name: Raicuparta/ow-mod-db
+          repository: Raicuparta/ow-mod-db
           ref: master
           fetch-depth: 0
           path: ow-mod-db
