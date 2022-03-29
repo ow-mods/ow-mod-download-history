@@ -24,19 +24,17 @@ jobs:
           fetch-depth: 0
           path: ow-mod-db
           
-      - name: Get database log
+      - name: Get database log 
+        id: log-txt
         run: |
           cd ow-mod-db
-          git log -p > ../log.txt
+          git log -p > log.txt
+          echo ::set-output name=log-txt::$(cat log.txt)
           cd ..
-        
-      - name: Log txt result
-        id: log-txt
-        run: echo "::set-output name=mods::$(< ./log.txt sed ':a;N;$!ba;s/\n/ /g')"
         
       - name: Convert log.txt to json
         run: |
-          ./download-extractor/bin/Debug/net6.0/OWModDBDownloadCountExtractor.exe log.txt
+          ./download-extractor/bin/Debug/net6.0/OWModDBDownloadCountExtractor.exe "./ow-mod-db/log.txt"
           
       - name: Log json result
         id: log-json
