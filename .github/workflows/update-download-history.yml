@@ -40,6 +40,6 @@ jobs:
         run: |
           cd download-extractor
           git add download-history.json
-          git commit -m "Update download history"
+          git commit --author="GH Action <db@outerwildsmods.com>" -m "Update download history"
           git push
   
