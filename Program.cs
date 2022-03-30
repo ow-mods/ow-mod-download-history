@@ -7,12 +7,12 @@ class Core
 	{
 		var logFile = File.ReadAllText(args[0]);
 
-		var splits = logFile.Split($"\ncommit ");
+		var splits = logFile.Split($"\r\ncommit ");
 
 		List<Commit> commits = new();
 		foreach (var split in splits)
 		{
-			var commit = new Commit(split.Split("\n"));
+			var commit = new Commit(split.Split("\r\n"));
 			commits.Add(commit);
 		}
 
@@ -76,7 +76,7 @@ struct Commit
 
 	public Commit(string[] lines)
 	{
-		var enGB = new CultureInfo("en-GB");
+		var enGB = CultureInfo.InvariantCulture;
 
 		Lines = lines;
 		var time = lines.First(x => x.StartsWith("Date:"))[8..32];
