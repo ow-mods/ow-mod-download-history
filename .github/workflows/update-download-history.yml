@@ -38,7 +38,7 @@ jobs:
           
       - name: Commit log json
         run: |
-          cd ow-mod-db
+          cd download-extractor
           git add download-history.json
           git commit -m "Update download history"
           git push
