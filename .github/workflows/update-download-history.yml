@@ -1,0 +1,47 @@
+
+name: Update download history
+
+on:
+#   schedule:
+#     - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v3
+        with:
+          path: download-extractor
+
+      - name: Checkout mod database
+        uses: actions/checkout@v3
+        with:
+          repository: Raicuparta/ow-mod-db
+          ref: master
+          fetch-depth: 0
+          path: ow-mod-db
+          
+      - name: Get database log 
+        run: |
+          cd ow-mod-db
+          git log -p > log.txt
+          cd ..
+        
+      - name: Convert log.txt to json
+        run: |
+          cd download-extractor
+          ./bin/Debug/net6.0/OWModDBDownloadCountExtractor.exe "../ow-mod-db/log.txt" > download-history.json
+          cd ..
+          
+      - name: Commit log json
+        run: |
+          cd download-extractor
+          git config --global user.email "GH Action"
+          git config --global user.name "db@outerwildsmods.com"
+          git add download-history.json
+          git commit -m "Update download history"
+          git push
+  
