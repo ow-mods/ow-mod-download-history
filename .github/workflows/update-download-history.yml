@@ -2,8 +2,8 @@
 name: Update download history
 
 on:
-#   schedule:
-#     - cron: "*/5 * * * *"
+  schedule:
+    - cron: "0 * * * *"
   workflow_dispatch:
 
 jobs:
