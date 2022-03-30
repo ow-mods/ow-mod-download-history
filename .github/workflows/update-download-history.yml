@@ -33,7 +33,7 @@ jobs:
       - name: Convert log.txt to json
         run: |
           cd download-extractor
-          ./bin/Debug/net6.0/OWModDBDownloadCountExtractor.exe "./ow-mod-db/log.txt" > download-history.json
+          ./bin/Debug/net6.0/OWModDBDownloadCountExtractor.exe "../ow-mod-db/log.txt" > download-history.json
           cd ..
           
       - name: Commit log json
