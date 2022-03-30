@@ -1,5 +1,5 @@
 
-name: Update chart data
+name: Update download history
 
 on:
 #   schedule:
@@ -25,17 +25,21 @@ jobs:
           path: ow-mod-db
           
       - name: Get database log 
-        id: log-txt
         run: |
           cd ow-mod-db
           git log -p > log.txt
-          echo ::set-output name=log-txt::$(cat log.txt)
           cd ..
         
       - name: Convert log.txt to json
         run: |
-          ./download-extractor/bin/Debug/net6.0/OWModDBDownloadCountExtractor.exe "./ow-mod-db/log.txt"
+          cd download-extractor
+          ./bin/Debug/net6.0/OWModDBDownloadCountExtractor.exe "./ow-mod-db/log.txt" > download-history.json
+          cd ..
           
-      - name: Log json result
-        id: log-json
-        run: echo "::set-output name=mods::$(< ./outpput.json sed ':a;N;$!ba;s/\n/ /g')"
+      - name: Commit log json
+        run: |
+          cd ow-mod-db
+          git add download-history.json
+          git commit -m "Update download history"
+          git push
+  
