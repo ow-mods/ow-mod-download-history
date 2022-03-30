@@ -7,12 +7,12 @@ class Core
 	{
 		var logFile = File.ReadAllText(args[0]);
 
-		var splits = logFile.Split($"\ncommit ");
+		var splits = logFile.Split($"\r\ncommit ");
 
 		List<Commit> commits = new();
 		foreach (var split in splits)
 		{
-			var commit = new Commit(split.Split("\n"));
+			var commit = new Commit(split.Split("\r\n"));
 			commits.Add(commit);
 		}
 
@@ -76,11 +76,11 @@ struct Commit
 
 	public Commit(string[] lines)
 	{
-		var cultureInfo = CultureInfo.InvariantCulture;
+		var enGB = CultureInfo.InvariantCulture;
 
 		Lines = lines;
 		var time = lines.First(x => x.StartsWith("Date:"))[8..32];
-		var month = DateTime.ParseExact(time[4..7], "MMM", cultureInfo).Month;
+		var month = DateTime.ParseExact(time[4..7], "MMM", enGB).Month;
 		var dayOfMonth_temp = time[8..10];
 
 		var offset = 0;
@@ -90,9 +90,9 @@ struct Commit
 			offset = 1;
 		}
 
-		var dayOfMonth = DateTime.ParseExact(dayOfMonth_temp, "dd", cultureInfo).Day;
-		var clockTime = DateTime.ParseExact(time[(11 - offset)..(19 - offset)], "HH:mm:ss", cultureInfo).TimeOfDay;
-		var year = DateTime.ParseExact(time[(20 - offset)..(24 - offset)], "yyyy", cultureInfo).Year;
+		var dayOfMonth = DateTime.ParseExact(dayOfMonth_temp, "dd", enGB).Day;
+		var clockTime = DateTime.ParseExact(time[(11 - offset)..(19 - offset)], "HH:mm:ss", enGB).TimeOfDay;
+		var year = DateTime.ParseExact(time[(20 - offset)..(24 - offset)], "yyyy", enGB).Year;
 		Time = new DateTime(year, month, dayOfMonth, clockTime.Hours, clockTime.Minutes, clockTime.Seconds);
 
 		var indexOfStartBlock = Lines.ToList().IndexOf("+++ b/database.json");
@@ -164,28 +164,28 @@ struct ModDatabaseUpdate
 		if (lines.Any(x => x.StartsWith("+      \"downloadCount\":")))
 		{
 			var downloadCount = lines.First(x => x.StartsWith("+      \"downloadCount\":"));
-			DownloadCount = downloadCount[^2] == ',' ? int.Parse(downloadCount[24..^2]) : int.Parse(downloadCount[24..^1]);
+			DownloadCount = downloadCount[^1] == ',' ? int.Parse(downloadCount[24..^1]) : int.Parse(downloadCount[24..]);
 
 			var removedCount_temp = lines.FirstOrDefault(x => x.StartsWith("-      \"downloadCount\":"));
 
 			removedCount = removedCount_temp == null
 				? 0
-				: removedCount_temp[^2] == ','
-					? int.Parse(removedCount_temp[24..^2])
-					: int.Parse(removedCount_temp[24..^1]);
+				: removedCount_temp[^1] == ','
+					? int.Parse(removedCount_temp[24..^1])
+					: int.Parse(removedCount_temp[24..]);
 		}
 		else if (lines.Any(x => x.StartsWith("+    \"downloadCount\":")))
 		{
 			var downloadCount = lines.First(x => x.StartsWith("+    \"downloadCount\":"));
-			DownloadCount = downloadCount[^2] == ',' ? int.Parse(downloadCount[22..^2]) : int.Parse(downloadCount[22..^1]);
+			DownloadCount = downloadCount[^1] == ',' ? int.Parse(downloadCount[22..^1]) : int.Parse(downloadCount[22..]);
 
 			var removedCount_temp = lines.FirstOrDefault(x => x.StartsWith("-    \"downloadCount\":"));
 
 			removedCount = removedCount_temp == null
 				? 0
-				: removedCount_temp[^2] == ','
-					? int.Parse(removedCount_temp[22..^2])
-					: int.Parse(removedCount_temp[22..^1]);
+				: removedCount_temp[^1] == ','
+					? int.Parse(removedCount_temp[22..^1])
+					: int.Parse(removedCount_temp[22..]);
 		}
 		
 		
