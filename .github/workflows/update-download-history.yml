@@ -39,7 +39,9 @@ jobs:
       - name: Commit log json
         run: |
           cd download-extractor
+          git config --global user.email "GH Action"
+          git config --global user.name "db@outerwildsmods.com"
           git add download-history.json
-          git commit --author="GH Action <db@outerwildsmods.com>" -m "Update download history"
+          git commit -m "Update download history"
           git push
   
