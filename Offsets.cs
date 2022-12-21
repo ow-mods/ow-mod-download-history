@@ -23,8 +23,8 @@ public static class Offsets
 
     public static Dictionary<string, Between> offsetBetween = new Dictionary<string, Between>
         {
-            { "https://github.com/MegaPiggy/Outer-Wilds-Galaxy", new Between(1666935441, 1671558897, 3766) },
-            { "https://github.com/MegaPiggy/jammerlore", new Between(1666962763, 1671498058, 373) }
+            { "https://github.com/MegaPiggy/Outer-Wilds-Galaxy", new Between(1666935441, 1671576897, 3766) },
+            { "https://github.com/MegaPiggy/jammerlore", new Between(1666962763, 1671516058, 373) }
         };
 
     public static Dictionary<string, List<DownloadCountUpdate>> offsets = new Dictionary<string, List<DownloadCountUpdate>>
