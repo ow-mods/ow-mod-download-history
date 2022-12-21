@@ -27,12 +27,26 @@ class Core
 			{
 				if (update.Repo == mod)
 				{
-					countUpdates.Add(new DownloadCountUpdate()
-					{
-						DownloadCount = update.DownloadCount,
-						UnixTimestamp = ((DateTimeOffset)update.Time).ToUnixTimeSeconds()
-					});
+					countUpdates.Add(new DownloadCountUpdate(((DateTimeOffset)update.Time).ToUnixTimeSeconds(), update.DownloadCount));
 				}
+			}
+
+			if (Offsets.offsetBetween.ContainsKey(mod))
+			{
+				Offsets.Between offsetBetween = Offsets.offsetBetween[mod];
+				foreach (DownloadCountUpdate update in countUpdates)
+				{
+					long unixTimestamp = update.UnixTimestamp;
+					if (unixTimestamp > offsetBetween.AfterUnixTimestamp && unixTimestamp <= offsetBetween.BeforeUnixTimestamp)
+					{
+						update.DownloadCount += offsetBetween.DownloadCount;
+					}
+				}
+			}
+
+			if (Offsets.offsets.ContainsKey(mod))
+			{
+				countUpdates.AddRange(Offsets.offsets[mod]);
 			}
 
 			var entry = new Entry()
