@@ -7,12 +7,14 @@ class Core
     {
         var logFile = File.ReadAllText(args[0]);
 
-        var splits = logFile.Split($"\r\ncommit ");
+        logFile = logFile.Replace("\r\n", "\n"); // idk man
+
+        var splits = logFile.Split($"\ncommit ");
 
         List<Commit> commits = new();
         foreach (var split in splits)
         {
-            var commit = new Commit(split.Split("\r\n"));
+            var commit = new Commit(split.Split("\n"));
             commits.Add(commit);
         }
 
