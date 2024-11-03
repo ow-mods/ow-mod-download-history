@@ -26,7 +26,14 @@ class Core
             List<DownloadCountUpdate> countUpdates = new();
             foreach (var update in updates)
             {
-                if (update.Repo == mod)
+                var isMod = update.Repo == mod;
+                
+                if (Offsets.oldRepos.ContainsKey(mod))
+                {
+                    isMod = isMod || Offsets.oldRepos[mod].Contains(update.Repo);
+                }
+
+                if (isMod)
                 {
                     countUpdates.Add(new DownloadCountUpdate(((DateTimeOffset)update.Time).ToUnixTimeSeconds(), update.DownloadCount));
                 }

@@ -29,6 +29,11 @@ public static class Offsets
             { "https://github.com/MegaPiggy/GhostTranslations", new List<Between>{new Between(1690262278, 1690873246, 1189) } },
             { "https://github.com/TerrificTrifid/ow-nh-quasar-project", new List<Between>{new Between(1690678490, 1690863047, 235) } }
         };
+    
+    public static Dictionary<string, List<string>> oldRepos = new Dictionary<string, List<string>>
+        {
+            { "https://github.com/MegaPiggy/CheatsMod_NoCommonResources", new List<string>{ "https://github.com/PacificEngine/OW_CheatsMod" } },
+        };
 
     public static Dictionary<string, List<DownloadCountUpdate>> offsets = new Dictionary<string, List<DownloadCountUpdate>>
         {
