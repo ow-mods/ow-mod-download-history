@@ -27,7 +27,8 @@ public static class Offsets
             { "https://github.com/MegaPiggy/jammerlore", new List<Between>{new Between(1666962763, 1671516058, 373) } },
             { "https://github.com/dgarroDC/OW_CommonResources", new List<Between>{new Between(1664474218, 1688126220, 8562) } },
             { "https://github.com/MegaPiggy/GhostTranslations", new List<Between>{new Between(1690262278, 1690873246, 1189) } },
-            { "https://github.com/TerrificTrifid/ow-nh-quasar-project", new List<Between>{new Between(1690678490, 1690863047, 235) } }
+            { "https://github.com/TerrificTrifid/ow-nh-quasar-project", new List<Between>{new Between(1690678490, 1690863047, 235) } },
+            { "https://github.com/MegaPiggy/CheatsMod_NoCommonResources", new List<Between>{new Between(1730653300, 1730654660, 16489) } },
         };
     
     public static Dictionary<string, List<string>> oldRepos = new Dictionary<string, List<string>>
