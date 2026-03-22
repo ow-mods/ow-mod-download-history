@@ -6,18 +6,28 @@ on:
     - cron: "5 * * * *"
   workflow_dispatch:
 
+permissions:
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
 
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout this repo
-        uses: actions/checkout@v3
-        with:
-          path: download-extractor
+        uses: actions/checkout@v4
 
       - name: Checkout mod database
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Raicuparta/ow-mod-db
           ref: master
@@ -37,16 +47,15 @@ jobs:
         
       - name: Convert log.txt to json
         run: |
-          cd download-extractor
-          dotnet run -- "../ow-mod-db/log.txt" > download-history.json
-          cd ..
-          
-      - name: Commit log json
-        run: |
-          cd download-extractor
-          git config --global user.email "GH Action"
-          git config --global user.name "db@outerwildsmods.com"
-          git add download-history.json
-          git commit -m "Update download history"
-          git push
+          mkdir _site
+          dotnet run -- "ow-mod-db/log.txt" > _site/download-history.json
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
   
