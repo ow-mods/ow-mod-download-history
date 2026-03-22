@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 var modUpdates = new Dictionary<string, List<DownloadCountUpdate>>(256);
 var hunkLines = new List<string>(64);
@@ -7,7 +6,6 @@ DateTime commitTime = default;
 bool inDatabaseDiff = false;
 bool pastFirstHunkHeader = false;
 
-// Stream line-by-line instead of loading the entire file into memory
 using (var fs = new FileStream(args[0], FileMode.Open, FileAccess.Read, FileShare.Read, 1024 * 1024, FileOptions.SequentialScan))
 using (var reader = new StreamReader(fs))
 {
@@ -63,7 +61,6 @@ using (var reader = new StreamReader(fs))
         ProcessHunk(hunkLines, commitTime, modUpdates);
 }
 
-// Merge old repo updates into new repos (copies to avoid shared mutation)
 foreach (var (newRepo, oldRepoList) in Offsets.oldRepos)
 {
     if (!modUpdates.TryGetValue(newRepo, out var newUpdates))
@@ -76,12 +73,11 @@ foreach (var (newRepo, oldRepoList) in Offsets.oldRepos)
         if (modUpdates.TryGetValue(oldRepo, out var oldUpdates))
         {
             foreach (var u in oldUpdates)
-                newUpdates.Add(new DownloadCountUpdate(u.T, u.D));
+                newUpdates.Add(new DownloadCountUpdate(u.UnixTimestamp, u.DownloadCount));
         }
     }
 }
 
-// Apply between-timestamp download count adjustments
 foreach (var (repo, betweens) in Offsets.offsetBetween)
 {
     if (!modUpdates.TryGetValue(repo, out var updates)) continue;
@@ -89,13 +85,12 @@ foreach (var (repo, betweens) in Offsets.offsetBetween)
     {
         foreach (var between in betweens)
         {
-            if (update.T > between.AfterUnixTimestamp && update.T <= between.BeforeUnixTimestamp)
-                update.D += between.DownloadCount;
+            if (update.UnixTimestamp > between.AfterUnixTimestamp && update.UnixTimestamp <= between.BeforeUnixTimestamp)
+                update.DownloadCount += between.DownloadCount;
         }
     }
 }
 
-// Add static offset entries (copies to keep Offsets data immutable)
 foreach (var (repo, staticUpdates) in Offsets.offsets)
 {
     if (!modUpdates.TryGetValue(repo, out var updates))
@@ -104,10 +99,9 @@ foreach (var (repo, staticUpdates) in Offsets.offsets)
         modUpdates[repo] = updates;
     }
     foreach (var u in staticUpdates)
-        updates.Add(new DownloadCountUpdate(u.T, u.D));
+        updates.Add(new DownloadCountUpdate(u.UnixTimestamp, u.DownloadCount));
 }
 
-// Write compact JSON to stdout via Utf8JsonWriter for maximum throughput
 using var stdout = Console.OpenStandardOutput();
 using var buffered = new BufferedStream(stdout, 1024 * 1024);
 using var writer = new Utf8JsonWriter(buffered, new JsonWriterOptions { SkipValidation = true });
@@ -116,22 +110,19 @@ writer.WriteStartArray();
 foreach (var (repo, updates) in modUpdates)
 {
     writer.WriteStartObject();
-    var repoName = repo.StartsWith("https://github.com/") ? repo[19..] : repo;
-    writer.WriteString("r"u8, repoName);
-    writer.WriteStartArray("u"u8);
+    writer.WriteString("Repo"u8, repo);
+    writer.WriteStartArray("Updates"u8);
     foreach (var u in updates)
     {
         writer.WriteStartObject();
-        writer.WriteNumber("t"u8, u.T);
-        writer.WriteNumber("d"u8, u.D);
+        writer.WriteNumber("UnixTimestamp"u8, u.UnixTimestamp);
+        writer.WriteNumber("DownloadCount"u8, u.DownloadCount);
         writer.WriteEndObject();
     }
     writer.WriteEndArray();
     writer.WriteEndObject();
 }
 writer.WriteEndArray();
-
-// --- Helper methods ---
 
 static void ProcessHunk(List<string> lines, DateTime time, Dictionary<string, List<DownloadCountUpdate>> modUpdates)
 {
