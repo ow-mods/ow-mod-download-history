@@ -27,7 +27,7 @@ class Core
             foreach (var update in updates)
             {
                 var isMod = update.Repo == mod;
-                
+
                 if (Offsets.oldRepos.ContainsKey(mod))
                 {
                     isMod = isMod || Offsets.oldRepos[mod].Contains(update.Repo);
@@ -44,12 +44,12 @@ class Core
                 List<Offsets.Between> offsetBetween = Offsets.offsetBetween[mod];
                 foreach (DownloadCountUpdate update in countUpdates)
                 {
-                    long unixTimestamp = update.UnixTimestamp;
+                    long unixTimestamp = update.T;
                     foreach (var between in offsetBetween)
                     {
                         if (unixTimestamp > between.AfterUnixTimestamp && unixTimestamp <= between.BeforeUnixTimestamp)
                         {
-                            update.DownloadCount += between.DownloadCount;
+                            update.D += between.DownloadCount;
                         }
                     }
                 }
