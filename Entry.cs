@@ -1,5 +1,5 @@
 ﻿public class Entry
 {
-	public string Repo { get; set; }
-	public DownloadCountUpdate[] Updates { get; set; }
+	public required string Repo { get; set; }
+	public required DownloadCountUpdate[] Updates { get; set; }
 }
