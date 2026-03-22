@@ -1,11 +1,11 @@
 ﻿public class DownloadCountUpdate
 {
-	public long T { get; set; }
-	public int D { get; set; }
+	public long T;
+	public int D;
 
-	public DownloadCountUpdate(long unixTimestamp, int downloadCount)
+	public DownloadCountUpdate(long t, int d)
 	{
-		T = unixTimestamp;
-		D = downloadCount;
+		T = t;
+		D = d;
 	}
 }
