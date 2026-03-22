@@ -8,7 +8,7 @@ on:
 
 jobs:
   update:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout this repo
@@ -30,15 +30,15 @@ jobs:
           git log -p > log.txt
           cd ..
 
-      - name: Setup .NET 6 runtime
+      - name: Setup .NET 8 runtime
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '8.0.x'
         
       - name: Convert log.txt to json
         run: |
           cd download-extractor
-          ./bin/Debug/net6.0/OWModDBDownloadCountExtractor.exe "../ow-mod-db/log.txt" > download-history-v2.json
+          dotnet run -- "../ow-mod-db/log.txt" > download-history-v2.json
           cd ..
           
       - name: Commit log json
